@@ -9,12 +9,12 @@ import { Response } from 'express';
 export class AuthController {
     constructor (private readonly authService: AuthService) {}
 
-    @Post('login') 
+    @Post('login')
     @UseGuards(LocalAuthGuard)
     async login(
-        @CurrentUser() user: User,
-        @Res({passthrough: true}) response: Response,
-    )  {
+      @CurrentUser() user: User,
+      @Res({ passthrough: true }) response: Response,
+    ) {
         await this.authService.login(user, response);
     }
 }
