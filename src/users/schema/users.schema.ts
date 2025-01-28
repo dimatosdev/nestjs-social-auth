@@ -6,11 +6,11 @@ export class User {
     @Prop({type: SchemaTypes.ObjectId, auto: true})
     _id: Types.ObjectId;
 
-    @Prop({unique: true})
+    @Prop()
     email: String;
 
     @Prop()
-    password: String;
+    password: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
