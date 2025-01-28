@@ -10,6 +10,9 @@ export class User {
     email: String;
 
     @Prop()
+    refreshToken?: string;
+
+    @Prop()
     password: string;
 }
 

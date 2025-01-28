@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schema/users.schema';
-import { FilterQuery, Model } from 'mongoose';
+import { FilterQuery, Model, UpdateQuery } from 'mongoose';
 import { hash } from 'bcryptjs';
 
 @Injectable()
@@ -26,6 +26,11 @@ export class UsersService {
     }
     return user;
   }
+
+  async updateUser(query: FilterQuery<User>, updateUserDto: UpdateQuery<User>) {
+    return this.userModel.findOneAndUpdate (query, updateUserDto);
+  }
+
 
   
   
