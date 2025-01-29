@@ -30,8 +30,5 @@ export class UsersService {
   async updateUser(query: FilterQuery<User>, updateUserDto: UpdateQuery<User>) {
     return this.userModel.findOneAndUpdate (query, updateUserDto);
   }
-
-
-  
   
 }

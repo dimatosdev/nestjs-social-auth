@@ -71,13 +71,26 @@ export class AuthService {
           const user = await this.usersService.getUser({
             email,
           });
-          const authenticated = await compare(password, user.password);
-          if (!authenticated) {
+          const isValid = await compare(password, user.password);
+          if (!isValid) {
             throw new UnauthorizedException();
           }
           return user;
         } catch (err) {
           throw new UnauthorizedException('Credentials are not valid.');
         }
-      }
+    }
+
+    async verifyUserRefreshToken(refreshToken: string, userId: string) {
+        try {
+            const user = await this.usersService.getUser({ _id: userId });
+            const isValid = await compare(refreshToken, user.refreshToken);
+            if (!isValid) {
+                throw new UnauthorizedException();
+            }
+            return
+        } catch (error) {
+            throw new UnauthorizedException('Invalid refresh token');
+        }
+    }
 }
