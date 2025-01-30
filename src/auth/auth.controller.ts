@@ -1,10 +1,11 @@
-import { Controller, Post, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { User } from 'src/users/schema/users.schema';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
-import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guards';
+import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard';
+import { GoogleAuthGuard } from './guards/google-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -27,5 +28,18 @@ export class AuthController {
     ) {
       console.log('refresh token');
         await this.authService.login(user, response);
+    }
+
+    @Get('google')
+    @UseGuards(GoogleAuthGuard)
+    loginGoogle() {}
+  
+    @Get('google/callback')
+    @UseGuards(GoogleAuthGuard)
+    async googleCallback(
+      @CurrentUser() user: User,
+      @Res({ passthrough: true }) response: Response,
+    ) {
+      await this.authService.login(user, response, true);
     }
 }
